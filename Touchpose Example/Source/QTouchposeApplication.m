@@ -186,13 +186,16 @@ static void UIWindow_new_didAddSubview(UIWindow *window, SEL _cmd, UIView *view)
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShowNotification:) name:UIKeyboardDidShowNotification object:nil];        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHideNotification:) name:UIKeyboardDidHideNotification object:nil];        
         _touchDictionary = CFDictionaryCreateMutable(NULL, 10, NULL, NULL);
-        _alwaysShowTouches = NO;
+        
+        //If FALSE will only show when AirPlay is connected
+        _alwaysShowTouches = TRUE;
         _touchColor = [UIColor colorWithRed:0.251f green:0.424f blue:0.502f alpha:1.0f];
         _touchEndAnimationDuration = 0.5f;
         _touchEndTransform = CATransform3DMakeScale(1.5, 1.5, 1);
         
-        _customTouchImage = nil;
-        _customTouchPoint = CGPointZero;
+        //Custom image from another tool
+        _customTouchImage = [UIImage imageNamed:@"touch.png"];
+        _customTouchPoint = CGPointMake(_customTouchImage.size.width/2.0f, _customTouchImage.size.height/2.0f);
         
         // In my experience, the keyboard performance is crippled when showing touches on a
         // device running iOS < 5, so by default, disable touches when the keyboard is
